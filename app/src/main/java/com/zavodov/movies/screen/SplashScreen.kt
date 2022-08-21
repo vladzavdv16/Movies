@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Black
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.zavodov.movies.MainViewModel
 import com.zavodov.movies.navigation.Screens
 import com.zavodov.movies.utils.Constants
 import kotlinx.coroutines.delay
@@ -27,7 +28,7 @@ import kotlinx.coroutines.delay
  * Created by Zavodov on 21.08.2022
  */
 @Composable
-fun SplashScreen(navHostController: NavHostController){
+fun SplashScreen(navHostController: NavHostController, viewModel: MainViewModel){
 	var startAnimate by remember {
 		mutableStateOf(false)
 	}
@@ -36,6 +37,7 @@ fun SplashScreen(navHostController: NavHostController){
 		animationSpec = tween(durationMillis = 3000))
 	LaunchedEffect(key1 = true) {
 		startAnimate = true
+		viewModel.getAllMovies()
 		delay(4000)
 		navHostController.navigate(Screens.Main.route)
 	}
@@ -49,7 +51,9 @@ fun Splash(alpha: Float){
 		contentAlignment = Alignment.Center
 	) {
 		Icon(
-			modifier = Modifier.size(120.dp).alpha(alpha),
+			modifier = Modifier
+				.size(120.dp)
+				.alpha(alpha),
 			imageVector = Icons.Default.PlayArrow,
 			contentDescription = "",
 			tint = androidx.compose.ui.graphics.Color.Black
