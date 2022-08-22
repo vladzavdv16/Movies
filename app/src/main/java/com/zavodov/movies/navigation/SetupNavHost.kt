@@ -14,25 +14,26 @@ import com.zavodov.movies.utils.Constants
  * Created by Zavodov on 21.08.2022
  */
 
-sealed class Screens(val route: String){
-	object Splash: Screens(Constants.Screens.SPLASH_SCREEN)
-	object Main: Screens(Constants.Screens.MAIN_SCREEN)
-	object Details: Screens(Constants.Screens.DETAILS_SCREEN)
+sealed class Screens(val route: String) {
+	object Splash : Screens(Constants.Screens.SPLASH_SCREEN)
+	object Main : Screens(Constants.Screens.MAIN_SCREEN)
+	object Details : Screens(Constants.Screens.DETAILS_SCREEN)
 }
 
 @Composable
-fun SetupNavHost(navController: NavHostController, viewModel: MainViewModel){
-	NavHost(navController = navController,
+fun SetupNavHost(navController: NavHostController, viewModel: MainViewModel) {
+	NavHost(
+		navController = navController,
 		startDestination = Screens.Splash.route
 	) {
-		composable(Screens.Splash.route){
+		composable(Screens.Splash.route) {
 			SplashScreen(navController, viewModel)
 		}
-		composable(Screens.Main.route){
+		composable(Screens.Main.route) {
 			MainScreen(navController, viewModel)
 		}
-		composable(Screens.Details.route){
-			DetailsScreen()
+		composable(Screens.Details.route + "/{Id}") {
+			DetailsScreen(navController, viewModel, it.arguments?.getString("Id") ?: "1")
 		}
 	}
 }
