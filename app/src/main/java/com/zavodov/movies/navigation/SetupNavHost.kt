@@ -33,7 +33,7 @@ fun SetupNavHost(navController: NavHostController, viewModel: MainViewModel) {
 			MainScreen(navController, viewModel)
 		}
 		composable(Screens.Details.route + "/{Id}") {
-			DetailsScreen(navController, viewModel, it.arguments?.getString("Id") ?: "1")
+			DetailsScreen(viewModel, it.arguments?.getString("Id") ?: "1")
 		}
 	}
 }
